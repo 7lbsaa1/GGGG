@@ -1,0 +1,1 @@
+import {auth} from "./firebase.js";import {signOut} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";document.getElementById("logout").onclick=()=>signOut(auth).then(()=>location.href="index.html");

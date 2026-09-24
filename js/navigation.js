@@ -1,0 +1,6 @@
+import {auth} from "./firebase.js";import {onAuthStateChanged,signOut} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";import {read} from "./database.js";
+export const toast=(msg)=>{let x=document.querySelector(".toast");if(!x){x=document.createElement("div");x.className="toast";document.body.append(x)}x.textContent=msg;x.classList.remove("hidden");clearTimeout(window.__toast);window.__toast=setTimeout(()=>x.classList.add("hidden"),3000)};
+export const go=p=>location.href=p;
+export function nav(user){return `<header class="navbar"><a class="brand" href="home.html"><img src="https://cdn-icons-png.flaticon.com/128/7978/7978734.png">sky7</a><div class="nav-actions"><button class="icon-btn" onclick="location.href='home.html'">⌂</button><button class="icon-btn" onclick="location.href='profile.html'">◉</button><button class="icon-btn" onclick="document.dispatchEvent(new Event('open-chat'))">💬</button></div></header>`}
+export async function requireUser(){return new Promise(resolve=>onAuthStateChanged(auth,async u=>{if(!u){location.href="index.html";return}const s=await read("users/"+u.uid);if(s.exists()&&s.val().blocked){location.href="block.html";return}resolve({auth:u,data:s.exists()?s.val():{}})}))}
+export function logout(){return signOut(auth).then(()=>location.href="index.html")}

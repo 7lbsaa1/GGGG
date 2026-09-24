@@ -1,0 +1,10 @@
+import {db} from "./firebase.js";
+import {ref,set,get,push,update,remove,onValue,query,orderByChild,limitToLast} from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+export const path=p=>ref(db,p);
+export const read=p=>get(ref(db,p));
+export const write=(p,v)=>set(ref(db,p),v);
+export const patch=(p,v)=>update(ref(db,p),v);
+export const add=(p,v)=>{const r=push(ref(db,p)); return set(r,v).then(()=>r.key)};
+export const del=p=>remove(ref(db,p));
+export const listen=(p,fn)=>onValue(ref(db,p),fn);
+export {query,orderByChild,limitToLast};
